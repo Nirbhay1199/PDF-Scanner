@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".activities.CameraActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@drawable/camera_activity_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/close"
+            android:src="@drawable/close"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:padding="15dp"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/removeImage"
+            android:src="@drawable/remove"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:padding="15dp"
+            android:layout_width="?actionBarSize"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cdv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/black"
+            app:cardCornerRadius="15dp">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/display"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/l4"
+        android:background="@drawable/camera_bg"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/shutter"
+            android:src="@drawable/shutter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
