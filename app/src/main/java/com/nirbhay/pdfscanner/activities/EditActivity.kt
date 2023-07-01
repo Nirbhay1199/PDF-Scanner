@@ -33,6 +33,7 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
     private lateinit var listView: ListView
     private lateinit var imageListViewModel: ImagesListViewModel
     private lateinit var adapter: EditListAdapter
+    private lateinit var file: File
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
@@ -43,6 +44,7 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
         imageListViewModel = ViewModelProvider(this)[ImagesListViewModel::class.java]
 
         val imageUris = imageUris
+
 
 
         adapter = EditListAdapter(this, R.layout.edit_activity_listview)
@@ -155,13 +157,12 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
 
 
         val downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        var appFolder = File(downloadDirectory ,"PDF Scanner")
+        val appFolder = File(downloadDirectory ,"PDF Scanner")
         if (!appFolder.exists()){
             appFolder.mkdirs()
         }
 
-
-        val file = File(appFolder,"$fileName.pdf")
+        file = File(appFolder,"$fileName.pdf")
 
         try {
             document.writeTo(FileOutputStream(file))
