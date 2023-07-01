@@ -43,9 +43,10 @@
                 android:gravity="center"
                 android:background="@drawable/circle_bg"
                 android:backgroundTint="@color/black"
-                android:layout_margin="30dp"
+                android:layout_marginStart="30dp"
                 android:padding="10dp"
                 android:layout_width="0dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
 
@@ -58,8 +59,9 @@
                 android:gravity="center"
                 android:background="@drawable/circle_bg"
                 android:backgroundTint="#1E88E5"
-                android:layout_margin="30dp"
+                android:layout_marginEnd="30dp"
                 android:padding="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>

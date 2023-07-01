@@ -10,25 +10,19 @@
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/action_bar"
+        android:fontFamily="@font/lilita_one_regular"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:text="@string/app_name"
-        android:paddingStart="10dp"
+        android:paddingStart="15dp"
         android:paddingEnd="0dp"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:gravity="center_vertical"
         android:textColor="#1E88E5"/>
 
-    <View
-        app:layout_constraintTop_toBottomOf="@+id/action_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#1E88E5"/>
 
     <TextView
         android:id="@+id/text"
@@ -79,7 +73,7 @@
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
             android:layout_height="match_parent"
-            android:background="@color/white"/>
+            android:background="@color/black"/>
 
         <ImageView
             android:padding="7dp"

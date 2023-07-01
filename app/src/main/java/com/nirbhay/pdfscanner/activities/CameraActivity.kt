@@ -15,9 +15,11 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.nirbhay.pdfscanner.R
 import com.nirbhay.pdfscanner.databinding.ActivityCameraBinding
 import com.nirbhay.pdfscanner.fragments.ImageFragment
+import com.nirbhay.pdfscanner.model.ImagesListViewModel.Companion.imageUris
 import java.io.File
 
 class CameraActivity : AppCompatActivity() {
@@ -51,6 +53,14 @@ class CameraActivity : AppCompatActivity() {
         if (binding.shutter.visibility == View.VISIBLE){
             binding.removeImage.visibility = View.GONE
         }
+
+
+        binding.lastImg.setOnClickListener {
+            if (imageUris.isNotEmpty()) {
+                showFragment(Uri.parse(imageUris.last()))
+            }
+        }
+
     }
 
     private fun getOutputDirectory(): File{
@@ -104,28 +114,9 @@ class CameraActivity : AppCompatActivity() {
             outputOption, ContextCompat.getMainExecutor(this),
             object: ImageCapture.OnImageSavedCallback{
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-
-                    val image: File = photoFile
-
-                    val uri = Uri.fromFile(image)
-
-
-                    val imageFragment = ImageFragment.newInstance(uri)
-
-                    binding.display.visibility = View.GONE
-                    binding.removeImage.visibility = View.VISIBLE
-
-                    supportFragmentManager.beginTransaction().apply {
-                        replace(R.id.frameLayout2, imageFragment)
-                        addToBackStack("tag")
-                        commit()
-                    }
-
-                    binding.l4.visibility = View.GONE
-                    binding.cdv.visibility = View.GONE
-
+                    val uri = Uri.fromFile(photoFile)
+                    showFragment(uri)
                 }
-
                 override fun onError(exception: ImageCaptureException) {
                     Log.e("imgCapErr",
                         "onError: ${exception.message}",
@@ -137,7 +128,21 @@ class CameraActivity : AppCompatActivity() {
         )
     }
 
+    private fun showFragment(uri: Uri){
+        val imageFragment = ImageFragment.newInstance(uri)
+        binding.lastImg.visibility = View.GONE
+        binding.imageCount.visibility = View.GONE
+        binding.display.visibility = View.GONE
+        binding.removeImage.visibility = View.VISIBLE
 
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frameLayout2, imageFragment)
+            addToBackStack("tag")
+            commit()
+        }
+        binding.l4.visibility = View.GONE
+        binding.cdv.visibility = View.GONE
+    }
 
 
     private fun cameraPermission() =

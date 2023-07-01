@@ -105,8 +105,16 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        imageUris.clear()
+        binding.cautionDialog.visibility = View.VISIBLE
+        binding.yes.setOnClickListener {
+            imageUris.clear()
+            finish()
+        }
+
+        binding.no.setOnClickListener {
+            binding.cautionDialog.visibility = View.GONE
+        }
+
     }
 
     private fun generatePdfFromImages(fileName: String) {

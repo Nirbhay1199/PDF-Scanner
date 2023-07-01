@@ -53,19 +53,35 @@ class ImageFragment : Fragment(R.layout.fragment_image) {
         takeMore.setOnClickListener {
             imageUris.add(uri)
             navigateBack(cameraActivity)
+            loadLastImage(cameraActivity)
         }
 
         createPdf.setOnClickListener {
             imageUris.add(uri)
+            cameraActivity.finish()
             val intent = Intent(requireContext(), EditActivity::class.java)
             startActivity(intent)
         }
 
         cameraActivity.binding.removeImage.setOnClickListener {
+            imageUris.remove(uri)
             navigateBack(cameraActivity)
+            loadLastImage(cameraActivity)
         }
 
 
+    }
+
+    private fun loadLastImage(cameraActivity: CameraActivity){
+        cameraActivity.binding.lastImg.visibility = View.VISIBLE
+        cameraActivity.binding.imageCount.visibility = View.VISIBLE
+        if (imageUris.isNotEmpty()) {
+            Glide.with(requireContext())
+                .load(Uri.parse(imageUris.last()))
+                .into(cameraActivity.binding.lastImg)
+
+            cameraActivity.binding.imageCount.text = imageUris.size.toString()
+        }
     }
 
     private fun navigateBack(cameraActivity: CameraActivity) {

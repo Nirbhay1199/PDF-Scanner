@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activities.CameraActivity"
-    android:orientation="vertical">
+    tools:context=".activities.CameraActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/camera_activity_actionbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
@@ -35,9 +38,12 @@
 
     <FrameLayout
         android:id="@+id/frameLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintBottom_toTopOf="@+id/l4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_height="0dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cdv"
@@ -58,12 +64,15 @@
 
 
     <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
         android:id="@+id/l4"
         android:background="@drawable/camera_bg"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_height="120dp"
         android:gravity="center">
 
         <ImageView
@@ -71,9 +80,35 @@
             android:src="@drawable/shutter"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
 
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/lastImg"
+        tools:src="@drawable/pdf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
 
-</LinearLayout>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/imageCount"
+        android:background="@drawable/circle_bg"
+        android:gravity="center"
+        tools:text="5"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="55dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
