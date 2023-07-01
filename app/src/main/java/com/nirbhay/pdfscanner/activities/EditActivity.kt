@@ -85,8 +85,6 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
                 if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1199)
                 }
-            }else{
-                Toast.makeText(this, "Permission not granted.", Toast.LENGTH_SHORT).show()
             }
         }
 

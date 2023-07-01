@@ -65,6 +65,10 @@ class ImageFragment : Fragment(R.layout.fragment_image) {
 
         cameraActivity.binding.removeImage.setOnClickListener {
             imageUris.remove(uri)
+            if (imageUris.isEmpty()){
+                cameraActivity.binding.imageCount.visibility = View.GONE
+                cameraActivity.binding.lastImg.visibility = View.GONE
+            }
             navigateBack(cameraActivity)
             loadLastImage(cameraActivity)
         }
@@ -73,14 +77,17 @@ class ImageFragment : Fragment(R.layout.fragment_image) {
     }
 
     private fun loadLastImage(cameraActivity: CameraActivity){
-        cameraActivity.binding.lastImg.visibility = View.VISIBLE
-        cameraActivity.binding.imageCount.visibility = View.VISIBLE
         if (imageUris.isNotEmpty()) {
+            cameraActivity.binding.lastImg.visibility = View.VISIBLE
+            cameraActivity.binding.imageCount.visibility = View.VISIBLE
             Glide.with(requireContext())
                 .load(Uri.parse(imageUris.last()))
                 .into(cameraActivity.binding.lastImg)
 
             cameraActivity.binding.imageCount.text = imageUris.size.toString()
+        }else{
+            cameraActivity.binding.lastImg.visibility = View.GONE
+            cameraActivity.binding.imageCount.visibility = View.GONE
         }
     }
 
@@ -90,6 +97,7 @@ class ImageFragment : Fragment(R.layout.fragment_image) {
         cameraActivity.binding.l4.visibility = View.VISIBLE
         cameraActivity.binding.cdv.visibility = View.VISIBLE
         cameraActivity.binding.removeImage.visibility = View.GONE
+
     }
 
 
