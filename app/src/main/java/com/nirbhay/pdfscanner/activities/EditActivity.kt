@@ -1,18 +1,22 @@
 package com.nirbhay.pdfscanner.activities
 
 import android.content.Context
-import android.view.inputmethod.InputMethodManager
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.DragEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.nirbhay.pdfscanner.R
 import com.nirbhay.pdfscanner.adapter.EditListAdapter
@@ -77,6 +81,13 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
         binding.confirmButton.setOnClickListener {
             binding.dialog.visibility = View.VISIBLE
             binding.confirmButton.visibility = View.GONE
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1199)
+                }
+            }else{
+                Toast.makeText(this, "Permission not granted.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -146,10 +157,11 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
 
 
         val downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val appFolder = File(downloadDirectory ,"PDF Scanner")
+        var appFolder = File(downloadDirectory ,"PDF Scanner")
         if (!appFolder.exists()){
             appFolder.mkdirs()
         }
+
 
         val file = File(appFolder,"$fileName.pdf")
 
@@ -163,7 +175,7 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
         } catch (e: IOException) {
             e.printStackTrace()
             imageUris.clear()
-            progressListener?.onPdfCreationFailed()
+            progressListener?.onPdfCreationFailed(e)
         }
 
 
@@ -179,7 +191,9 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
         Toast.makeText(this, "PDF Saved", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onPdfCreationFailed() {
+    override fun onPdfCreationFailed(e: Exception) {
+        finish()
+        e.printStackTrace()
         Toast.makeText(this, "Something went wrong !",Toast.LENGTH_SHORT).show()
     }
 
@@ -189,5 +203,5 @@ class EditActivity : AppCompatActivity(), PdfCreationProgressListener {
 interface PdfCreationProgressListener {
     fun onProgressUpdate(progress: Int)
     fun onPdfCreated(file: File)
-    fun onPdfCreationFailed()
+    fun onPdfCreationFailed(e: Exception)
 }

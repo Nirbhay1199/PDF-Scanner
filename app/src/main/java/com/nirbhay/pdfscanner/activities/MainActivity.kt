@@ -2,12 +2,16 @@ package com.nirbhay.pdfscanner.activities
 
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.nirbhay.pdfscanner.R
 import com.nirbhay.pdfscanner.adapter.ListAdapter
@@ -47,6 +51,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         showPDFFiles(appFolder)
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE), 1199)
+            }
+        }
+
 
 
     }
